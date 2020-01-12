@@ -1,0 +1,16 @@
+FROM php:7.4.1-cli-buster
+
+WORKDIR /opt/app
+COPY . /opt/app
+
+# git and ssh for composer install
+RUN apt-get update && apt-get install -y git ssh
+
+RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
+
+# xdebug for phpunit test-coverage
+RUN apt-get update &&\
+    apt-get install --no-install-recommends --assume-yes --quiet ca-certificates curl git &&\
+    rm -rf /var/lib/apt/lists/*
+
+RUN pecl install xdebug && docker-php-ext-enable xdebug

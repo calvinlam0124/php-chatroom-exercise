@@ -1,0 +1,10 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: chatroom-cli
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - image: localhost:5000/calvin/chatroom-cli
